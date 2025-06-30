@@ -1,0 +1,29 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"ru"			"<{green}Tank Pass{default}> "
+	}
+
+	"ONLY_TANK"
+	{
+		"ru"			"Команда доступна только для {red}танка"
+	}
+
+	"PASS_MENU_TITLE"
+	{
+		"ru"			"Выберите следующего танка:\n "
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"ru"			"Игрок {olive}{1}{default} не является {red}заражённым{default}"
+	}
+
+	"PASSED_TANK"
+	{
+		"#format"		"{1:N},{2:N}"
+		"ru"			"Игрок {red}{1}{default} передал {red}{2}{default} контроль над танком"
+	}
+}
