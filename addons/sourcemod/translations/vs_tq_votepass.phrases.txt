@@ -1,0 +1,41 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"en"			"<{green}Tank Vote{default}> "
+	}
+
+	"ROUND_STARTED"
+	{
+		"en"			"Voting is available before the start of the round"
+	}
+
+	"PASS_MENU_TITLE"
+	{
+		"en"			"Vote for the transfer of the Tank:"
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"en"			"Player {olive}{1}{default} must be on the {red}infected{default} team"
+	}
+
+	"VOTE_COULDOWN"
+	{
+		"#format"		"{1:d}"
+		"en"			"A vote cannot be called at this moment, try again in a {1} second"
+	}
+
+	"VOTE_TITLE"
+	{
+		"#format"		"{1:N}"
+		"en"			"Transfer control of Tank {1}"
+	}
+
+	"PASSED_TANK"
+	{
+		"#format"		"{1:N}"
+		"en"			"Player {red}{1}{default} will now be the next Tank"
+	}
+}

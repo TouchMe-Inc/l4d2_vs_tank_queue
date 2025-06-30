@@ -1,0 +1,41 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"ru"			"<{green}Tank Vote{default}> "
+	}
+
+	"ROUND_STARTED"
+	{
+		"ru"			"Голосование доступно только до начала раунда"
+	}
+
+	"PASS_MENU_TITLE"
+	{
+		"ru"			"Голосование за передачу Танка:"
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"ru"			"{olive}{1} {default}не является {red}заражённым{default}"
+	}
+
+	"VOTE_COULDOWN"
+	{
+		"#format"		"{1:d}"
+		"ru"			"В данный момент невозможно начать голосование. Повторите попытку через {1} секунд."
+	}
+
+	"VOTE_TITLE"
+	{
+		"#format"		"{1:N}"
+		"ru"			"Передать контроль танком {1}"
+	}
+
+	"PASSED_TANK"
+	{
+		"#format"		"{1:N}"
+		"ru"			"Игрок {red}{1}{default} будет следующим Танком"
+	}
+}

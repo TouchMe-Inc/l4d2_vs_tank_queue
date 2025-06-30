@@ -1,0 +1,18 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"en"			"<{green}Tank Queue{default}> "
+	}
+
+	"PASS_MENU_TITLE"
+	{
+		"en"			"Select a tank:"
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"en"			"{olive}{1} {default}The player must be on the {red}infected{default} team"
+	}
+}

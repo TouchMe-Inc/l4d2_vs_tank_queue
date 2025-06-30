@@ -1,0 +1,24 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"ru"			"<{green}Tank Queue{default}> "
+	}
+
+	"MENU_TITLE_PASS"
+	{
+		"#format"		"{1:d}"
+		"ru"			"Передача Танка:\nМеню закроется через {1} секунд(ы)\n"
+	}
+
+	"MENU_SKIP"
+	{
+		"ru"			"Do not transmit"
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"ru"			"Игрок {olive}{1}{default} не является {red}заражённым{default}"
+	}
+}
