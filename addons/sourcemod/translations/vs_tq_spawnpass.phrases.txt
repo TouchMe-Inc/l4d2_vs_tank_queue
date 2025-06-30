@@ -1,0 +1,24 @@
+"Phrases"
+{
+	"TAG"
+	{
+		"en"			"<{green}Tank Queue{default}> "
+	}
+
+	"MENU_TITLE_PASS"
+	{
+		"#format"		"{1:d}"
+		"en"			"Hand over Tank:\nThe menu will close in {1} seconds\n"
+	}
+
+	"MENU_SKIP"
+	{
+		"en"			"Do not transmit"
+	}
+
+	"TARGET_NOT_INFECTED"
+	{
+		"#format"		"{1:N}"
+		"en"			"Player {olive}{1}{default} must be on the {red}infected{default} team"
+	}
+}
