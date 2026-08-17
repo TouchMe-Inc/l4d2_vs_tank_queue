@@ -71,11 +71,12 @@ bool
 int g_iLastTankFrustration = -1;
 float g_fTankGrace = 0.0;
 
-char g_szWhoHadTankSteamId[64];
+char g_szWhoHadTankSteamId[MAX_AUTHID_LENGTH];
 StringMap g_smWhoHadTank = null;
 
 ConVar g_cvGameMode = null;
 
+ConVar g_cvSurvivorLimit = null;
 
 /**
  * Called before OnPluginStart.
@@ -178,7 +179,7 @@ int Native_IsWhoHadTankWithMap(Handle hPlugin, int iParams)
         return ThrowNativeError(SP_ERROR_NATIVE, ERR_INVALID_INDEX, iClient);
     }
 
-    char szSteamId[64];
+    char szSteamId[MAX_AUTHID_LENGTH];
     GetClientAuthId(iClient, AuthId_Steam2, szSteamId, sizeof(szSteamId));
 
     char szMapName[32];
@@ -200,6 +201,8 @@ public void OnPluginStart()
     char szGameMode[16]; GetConVarString(g_cvGameMode, szGameMode, sizeof szGameMode);
     g_bGamemodeAvailable = IsVersusMode(szGameMode);
 
+    g_cvSurvivorLimit = FindConVar("survivor_limit");
+
     // Event hooks.
     HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
     HookEvent("player_left_start_area", Event_LeftStartArea, EventHookMode_PostNoCopy);
@@ -218,36 +221,39 @@ public void OnPluginStart()
 /**
  * Called when a console variable value is changed.
  */
-void OnGamemodeChanged(ConVar hConVar, const char[] sOldGameMode, const char[] sNewGameMode) {
-    g_bGamemodeAvailable = IsVersusMode(sNewGameMode);
-}
-
-public void OnMapStart()
-{
-    if (IsNewGame()) {
-        g_smWhoHadTank.Clear();
-    }
+void OnGamemodeChanged(ConVar hConVar, const char[] szOldGameMode, const char[] szNewGameMode) {
+    g_bGamemodeAvailable = IsVersusMode(szNewGameMode);
 }
 
 /**
  * Round start event.
  */
-void Event_RoundStart(Event event, const char[] sName, bool bDontBroadcast)
+void Event_RoundStart(Event event, const char[] szName, bool bDontBroadcast)
 {
     g_bRoundIsLive = false;
     g_iNextTank = INVALID_TANK;
     g_szWhoHadTankSteamId[0] = '\0';
     g_iLastTankFrustration = -1;
 
-    if (IsNewGame()) {
-        
+    CreateTimer(1.0, Timer_ResetTankHistory, .flags = TIMER_FLAG_NO_MAPCHANGE);
+}
+
+Action Timer_ResetTankHistory(Handle hTimer)
+{
+    if (IsNewGame() && g_smWhoHadTank.Size > 0)
+    {
+        g_smWhoHadTank.Clear();
+        CPrintToChatAll("%t%t", "TAG", "CLEAR_ALL_QUEUE");
     }
+
+    ResetTankHistory();
+    return Plugin_Stop;
 }
 
 /**
  * Round start event.
  */
-void Event_LeftStartArea(Event event, const char[] sName, bool bDontBroadcast)
+void Event_LeftStartArea(Event event, const char[] szName, bool bDontBroadcast)
 {
     if (!g_bGamemodeAvailable) {
         return;
@@ -280,6 +286,7 @@ void Event_RoundEnd(Event event, const char[] sName, bool bDontBroadcast)
         char szMapName[32];
         GetCurrentMap(szMapName, sizeof szMapName);
         g_smWhoHadTank.SetString(g_szWhoHadTankSteamId, szMapName);
+        g_szWhoHadTankSteamId[0] = '\0';
     }
 
     g_bRoundIsLive = false;
@@ -519,14 +526,54 @@ int GetRandomInfectedPlayer(bool bWithoutWhoHadTank)
 }
 
 /**
+ * Checks if all infected players have been tank and resets their status if so.
+ * This allows for a new cycle of tank assignments.
+ */
+void ResetTankHistory()
+{
+    int iHadTankCount = 0;
+    int[] iInfectedPlayers = new int[MaxClients];
+    int iInfectedCount = 0;
+
+    int iMaxTeamSize = GetConVarInt(g_cvSurvivorLimit);
+
+    for (int iPlayer = 1; iPlayer <= MaxClients; iPlayer++)
+    {
+        if (!IsClientInGame(iPlayer) || IsFakeClient(iPlayer) || !IsClientInfected(iPlayer)) {
+            continue;
+        }
+
+        iInfectedPlayers[iInfectedCount++] = iPlayer;
+
+        if (IsWhoHadTank(iPlayer)) {
+            iHadTankCount++;
+        }
+    }
+
+    if (iInfectedCount != iMaxTeamSize || iInfectedCount != iHadTankCount) {
+        return;
+    }
+
+    char szSteamId[MAX_AUTHID_LENGTH];
+
+    for (int i = 0; i < iInfectedCount; i++)
+    {    
+        GetClientAuthId(iInfectedPlayers[i], AuthId_Steam2, szSteamId, sizeof szSteamId);
+        g_smWhoHadTank.Remove(szSteamId);
+    }
+
+    CPrintToChatAll("%t%t", "TAG", "CLEAR_INFECTED_QUEUE");
+}
+
+/**
  *
  */
 bool IsWhoHadTank(int iClient)
 {
-    char szSteamId[64];
-    GetClientAuthId(iClient, AuthId_Steam2, szSteamId, sizeof(szSteamId));
+    char szSteamId[MAX_AUTHID_LENGTH];
+    GetClientAuthId(iClient, AuthId_Steam2, szSteamId, sizeof szSteamId);
 
-    return (g_smWhoHadTank.ContainsKey(szSteamId));
+    return g_smWhoHadTank.ContainsKey(szSteamId);
 }
 
 /**

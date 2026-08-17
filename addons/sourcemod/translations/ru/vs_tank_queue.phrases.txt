@@ -1,18 +1,28 @@
 "Phrases"
 {
-	"TAG"
-	{
-		"ru"			"<{green}Tank Queue{default}> "
-	}
+    "TAG"
+    {
+        "ru"			"<{green}Tank Queue{default}> "
+    }
 
-	"HAS_NEXT_TANK"
-	{
-		"#format"		"{1:N}"
-		"ru"			"Игрок {red}{1}{default} будет следующим Танком"
-	}
+    "HAS_NEXT_TANK"
+    {
+        "#format"		"{1:N}"
+        "ru"			"Игрок {red}{1}{default} будет следующим Танком"
+    }
 
-	"NO_TANK"
-	{
-		"ru"			"Танком будет выбран случайный игрок"
-	}
+    "NO_TANK"
+    {
+        "ru"			"Танком будет выбран случайный игрок"
+    }
+
+    "CLEAR_ALL_QUEUE"
+    {
+        "ru"			"Новая игра — очередь танков сброшена для обеих команд"
+    }
+
+    "CLEAR_INFECTED_QUEUE"
+    {
+        "ru"			"Все заражённые отыграли танков — очередь заражённых очищена"
+    }
 }

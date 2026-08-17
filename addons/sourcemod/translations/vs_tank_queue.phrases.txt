@@ -1,18 +1,28 @@
 "Phrases"
 {
-	"TAG"
-	{
-		"en"			"<{green}Tank Queue{default}> "
-	}
+    "TAG"
+    {
+        "en"			"<{green}Tank Queue{default}> "
+    }
 
-	"HAS_NEXT_TANK"
-	{
-		"#format"		"{1:N}"
-		"en"			"Player {red}{1}{default} will be the next tank"
-	}
+    "HAS_NEXT_TANK"
+    {
+        "#format"		"{1:N}"
+        "en"			"Player {red}{1}{default} will be the next tank"
+    }
 
-	"NO_TANK"
-	{
-		"en"			"Tank not defined"
-	}
+    "NO_TANK"
+    {
+        "en"			"Tank not defined"
+    }
+
+    "CLEAR_ALL_QUEUE"
+    {
+        "en"			"New game — tank queue has been reset for both teams"
+    }
+
+    "CLEAR_INFECTED_QUEUE"
+    {
+        "en"			"All infected have finished their tanks — infected queue has been cleared"
+    }
 }
